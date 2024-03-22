@@ -1,9 +1,15 @@
 package entity
 
+import (
+	"gorm.io/gorm"
+)
+
 type User struct {
-	username string
-	name     string
-	lastname string
-	age      int
-	password string
+	gorm.Model
+
+	Username string `gorm: "index", "primaryKey"`
+	Name     string
+	Lastname string
+	Age      int
+	Password string
 }
