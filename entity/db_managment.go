@@ -1,9 +1,8 @@
-package service
+package entity
 
 import (
 	"fmt"
 	"service/auth/config"
-	"service/auth/entity"
 	"service/auth/util/encryption"
 
 	"gorm.io/driver/postgres"
@@ -11,7 +10,7 @@ import (
 )
 
 var (
-	database *gorm.DB
+	Database *gorm.DB
 	err      error
 )
 
@@ -26,13 +25,14 @@ func InitDb() {
 	}
 
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable", host, username, dbpassword, dbname, port)
-	database, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	conn, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		fmt.Print(err)
 	}
-	database.AutoMigrate(&entity.User{})
+	Database = conn
+	Database.AutoMigrate(&User{})
 }
 
 func GetDatabase() *gorm.DB {
-	return database
+	return Database
 }

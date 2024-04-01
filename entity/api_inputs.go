@@ -11,3 +11,8 @@ type UserInput struct {
 type EncryptRequest struct {
 	Text string
 }
+
+type LoginRequest struct {
+	Username string
+	Password string
+}

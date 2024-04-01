@@ -6,5 +6,5 @@ database:
   port: 5432
 
 security:
-#when enabled: password has to be encrypted with compiled key in util/encryption/encryption.go
+#when enabled: password has to be encrypted with compiled key in util/encryption/encryption.go  or using encrypt-tool
   enabled: true
