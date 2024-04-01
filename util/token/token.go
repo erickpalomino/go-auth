@@ -2,8 +2,10 @@ package token
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
+	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 )
 
@@ -36,4 +38,21 @@ func VerifyToken(tokenString string) error {
 		return fmt.Errorf("invalid token")
 	}
 	return nil
+}
+
+func ValidateTokenFromContext(c *gin.Context) error {
+	tokenString := extractToken(c)
+	return VerifyToken(tokenString)
+}
+
+func extractToken(c *gin.Context) string {
+	token := c.Query("token")
+	if token != "" {
+		return token
+	}
+	bearerToken := c.Request.Header.Get("Authorization")
+	if len(strings.Split(bearerToken, " ")) == 2 {
+		return strings.Split(bearerToken, " ")[1]
+	}
+	return ""
 }
